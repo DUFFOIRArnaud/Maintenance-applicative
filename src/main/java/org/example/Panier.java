@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Observable;
+
 public class Panier {
     private GestionDeStock stock;
     private Comptabilite compta;
@@ -19,5 +21,22 @@ public class Panier {
     public void declencherCommande() {
         this.stock.traite(this.contenu);
         this.compta.traite(this.contenu);
+    }
+
+    class DeclenchementCommande extends Observable{
+        public void notifyObservers() {
+            super.setChanged();
+            super.notifyObservers();
+        }
+
+        public void notifyObservers(Object arg) {
+            super.setChanged();
+            super.notifyObservers(arg);
+        }
+
+        @Override
+        public synchronized boolean hasChanged() {
+            return super.hasChanged();
+        }
     }
 }
